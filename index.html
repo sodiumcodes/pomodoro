@@ -36,6 +36,7 @@
     <script type="text/javascript">
         let pomoBody= document.getElementById('pomoBody');
         let navLink = document.querySelectorAll('.nav-link');
+        let category;
         navLink.forEach(button=>{
             button.addEventListener('click', ()=>{
                 let category= button.getAttribute("data-category")
@@ -43,16 +44,50 @@
                 switch(category){
                     case 'shortSession' : 
                             pomoBody.innerHTML= "20:00"
+                            category="shortSession"
                     break;
                     case 'longSession' :
                             pomoBody.innerHTML= "40:00"
+                            category="longSession"
                     break;
                     case 'break' :
                             pomoBody.innerHTML= "10:00"
+                            category="break"
                     break;
                 }
             })
         })
+        let time= null;
+        document.getElementById('pomoSrt').addEventListener('click', ()=>{
+            switch(category){
+                    case 'shortSession' : 
+                        time= 20*60; //time in seconds
+                        timerStart(time)
+                    break;
+                    case 'longSession' :
+                        time= 40*60; //time in seconds
+                        timerStart(time)
+                    break;
+                    case 'break' :
+                        time= 10*60; //time in seconds
+                        timerStart(time)
+                    break;
+                }
+        })
+        time=0;
+        function timerStart(time){
+            setInterval(()=>{
+                if(time>0){
+                    
+                }
+                else{
+                    clearInterval();
+                    timer = null;
+                    alert("Session is over!!")
+                }
+            })
+        }
+
     </script>
 </body>
 </html>
