@@ -61,7 +61,6 @@
         let time= null;
         document.getElementById('pomoSrt').addEventListener('click', ()=>{
             console.log("button is working");
-            
             switch(category){
                     case 'shortSession' : 
                         time= 20*60; //time in seconds
@@ -86,18 +85,22 @@
                 alert("Session is already running!!")
                 return;
             }
-            timerRunning = setInterval(()=>{
-                while(time>0){
+
+            timerRunning = setInterval(() => {
+                if(time > 0){
                     time--;
                     let minutes = Math.floor(time / 60);
                     let seconds = time % 60;
                     pomoBody.innerHTML = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 }
-                clearInterval();
-                timerRunning = null;
-                alert("Session is over")
-            })
+                else{
+                    clearInterval(timerRunning);
+                    timerRunning = null;
+                    alert("Session is over!");
+                }
+            }, 1000); // <-- 1000ms = 1 second
         }
+
 
     </script>
 </body>
