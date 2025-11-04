@@ -36,10 +36,10 @@
     <script type="text/javascript">
         let pomoBody= document.getElementById('pomoBody');
         let navLink = document.querySelectorAll('.nav-link');
-        let category;
+        let category= 'shortSession';
         navLink.forEach(button=>{
             button.addEventListener('click', ()=>{
-                let category= button.getAttribute("data-category")
+                category = button.getAttribute("data-category")
                 console.log(category)
                 switch(category){
                     case 'shortSession' : 
@@ -55,36 +55,47 @@
                             category="break"
                     break;
                 }
+                
             })
         })
         let time= null;
         document.getElementById('pomoSrt').addEventListener('click', ()=>{
+            console.log("button is working");
+            
             switch(category){
                     case 'shortSession' : 
                         time= 20*60; //time in seconds
-                        timerStart(time)
+                        console.log(time);
+                        timer(time)
                     break;
                     case 'longSession' :
                         time= 40*60; //time in seconds
-                        timerStart(time)
+                        console.log(time);
+                        timer(time)
                     break;
                     case 'break' :
                         time= 10*60; //time in seconds
-                        timerStart(time)
+                        console.log(time);
+                        timer(time)
                     break;
                 }
         })
-        time=0;
-        function timerStart(time){
-            setInterval(()=>{
-                if(time>0){
-                    
+        let timerRunning=null;
+        function timer(time){
+            if(timerRunning) {
+                alert("Session is already running!!")
+                return;
+            }
+            timerRunning = setInterval(()=>{
+                while(time>0){
+                    time--;
+                    let minutes = Math.floor(time / 60);
+                    let seconds = time % 60;
+                    pomoBody.innerHTML = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 }
-                else{
-                    clearInterval();
-                    timer = null;
-                    alert("Session is over!!")
-                }
+                clearInterval();
+                timerRunning = null;
+                alert("Session is over")
             })
         }
 
